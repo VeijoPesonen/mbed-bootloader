@@ -239,11 +239,8 @@ arm_uc_error_t ARM_UC_PAL_BlockDevice_Prepare(uint32_t slot_id,
     arm_uc_error_t result = { .code = ERR_INVALID_PARAMETER };
 
     if (details && buffer && buffer->ptr) {
-                      slot_id, details->size);
-
         /* encode firmware details in buffer */
-        arm_uc_error_t header_status = arm_uc_create_external_header_v2(details,
-                                                                        buffer);
+        arm_uc_error_t header_status = arm_uc_create_external_header_v2(details, buffer);
         if (header_status.error == ERR_NONE) {
             /* find the size needed to erase. Header is stored contiguous with firmware */
             uint32_t erase_size = pal_blockdevice_round_up_to_sector(pal_blockdevice_hdr_size + \
@@ -409,8 +406,6 @@ arm_uc_error_t ARM_UC_PAL_BlockDevice_Read(uint32_t slot_id,
     arm_uc_error_t result = { .code = ERR_INVALID_PARAMETER };
 
     if (buffer && buffer->ptr) {
-                      slot_id, offset, buffer->size);
-
         /* find address of slot */
         uint32_t slot_addr = ARM_UC_BLOCKDEVICE_INVALID_SIZE;
         uint32_t slot_size = ARM_UC_BLOCKDEVICE_INVALID_SIZE;
